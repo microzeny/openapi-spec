@@ -54,6 +54,11 @@
             <div class="doc-row">
               <div class="doc-copy">
                 <p>microzeny APIを利用すると、microzenyアカウントを使ってBitZenyの支払いや受け取りを行うことができます。microzenyは仮想通貨の実体ではなく権利のみを移動するオフチェーンサービスのため、支払い・受け取りはAPIリクエスト後すぐに完了します。</p>
+                <p>支払いは、最初にmicrozenyのウォレットからサービスに対してチャージを行いそのチャージ残高を使ってAPIから自由に支払いが行える
+                  <strong>ChargePayment</strong>、microzenyのウォレットから毎回確認を取りながら直接支払いを行う
+                  <strong>DirectPayment</strong> の2種類の方式があります。 ChargePaymentは、faucetのような特定のアカウントのチャージを複数ユーザに支払う仕組みや、ゲームプレイ料やAPI利用料のように何度も支払いを行うようなユースケースを想定しており、DirectPaymentはECサイトのようにまとまった金額をユーザが明示的に支払うようなサービスを想定しています。</p>
+                <p>microzenyAPIのOpenAPI定義ファイルは
+                  <a href="https://microzeny.github.io/openapi-spec/swagger.yaml">OpenAPI Spec File</a> にて公開しています。</p>
               </div>
               <div class="doc-examples">
                 <section>

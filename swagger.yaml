@@ -1,77 +1,82 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
   description: |
-   microzeny APIを利用すると、microzenyアカウントを使ってBitZenyの支払いや受け取りを行うことができます。microzenyは仮想通貨の実体ではなく権利のみを移動するオフチェーンサービスのため、支払い・受け取りはAPIリクエスト後すぐに完了します。
-  version: "0.0.1"
-  title: "microzeny API"
+    microzeny APIを利用すると、microzenyアカウントを使ってBitZenyの支払いや受け取りを行うことができます。microzenyは仮想通貨の実体ではなく権利のみを移動するオフチェーンサービスのため、支払い・受け取りはAPIリクエスト後すぐに完了します。
+
+    支払いは、最初にmicrozenyのウォレットからサービスに対してチャージを行いそのチャージ残高を使ってAPIから自由に支払いが行える **ChargePayment**、microzenyのウォレットから毎回確認を取りながら直接支払いを行う **DirectPayment** の2種類の方式があります。
+    ChargePaymentは、faucetのような特定のアカウントのチャージを複数ユーザに支払う仕組みや、ゲームプレイ料やAPI利用料のように何度も支払いを行うようなユースケースを想定しており、DirectPaymentはECサイトのようにまとまった金額をユーザが明示的に支払うようなサービスを想定しています。
+
+    microzenyAPIのOpenAPI定義ファイルは [OpenAPI Spec File](https://microzeny.github.io/openapi-spec/swagger.yaml) にて公開しています。
+  version: 0.0.1
+  title: microzeny API
 #  termsOfService: "https://microzeny.com/terms"
 #  contact:
 #    url: "https://microzeny.com/developers"
 #  license:
 #    name: "Apache 2.0"
 #    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "api.microzeny.com"
-basePath: "/v1"
+host: api.microzeny.com
+basePath: /v1
 tags:
-- name: Account
-  description: "microzenyアカウントの情報"
-- name: ChargePayment
-  description: "最初にサービスに対してチャージを行ってから支払う方法"
+  - name: Account
+    description: microzenyアカウントの情報
+  - name: ChargePayment
+    description: 最初にサービスに対してチャージを行ってから支払う方法
 #  externalDocs:
 #   description: "チャージと支払いについて"
 #   url: "https://microzeny.com/developers/about-charge-payment"
-- name: DirectPayment
-  description: "microzenyのデフォルトのウォレットから直接支払う方法"
+  - name: DirectPayment
+    description: microzenyのデフォルトのウォレットから直接支払う方法
 schemes:
-- "https"
+  - https
 consumes:
- - "application/x-www-form-urlencoded" 
+  - application/x-www-form-urlencoded
 produces:
- - "application/json"
+  - application/json
 paths:
   /accounts:
     get:
       tags:
-      - Account
-      summary: "microzenyアカウントの情報を取得します"
-      description: "microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。"
-      operationId: "getAccount"
+        - Account
+      summary: microzenyアカウントの情報を取得します
+      description: microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。
+      operationId: getAccount
       responses:
         default:
-          description: "Success."
+          description: Success.
           schema:
-           $ref: "#/definitions/Account"
+            $ref: '#/definitions/Account'
       security:
-      - microzeny_oauth:
-        - "accounts"
+        - microzeny_oauth:
+            - accounts
 securityDefinitions:
   microzeny_oauth:
-    type: "oauth2"
-    flow: "accessCode"
-    authorizationUrl: "https://microzeny.com/oauth/authorize"
-    tokenUrl: "https://api.microzeny.com/oauth/token"
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: 'https://microzeny.com/oauth/authorize'
+    tokenUrl: 'https://api.microzeny.com/oauth/token'
     scopes:
-      accounts: "認可したmicrozenyアカウントの情報を取得します"
+      accounts: 認可したmicrozenyアカウントの情報を取得します
 definitions:
   Account:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "string"
-        description: "アカウントのID"
-        example: "acc_xxxxxxxxxx"
+        type: string
+        description: アカウントのID
+        example: acc_xxxxxxxxxx
       name:
-        type: "string"
-        description: "アカウントの名前"
-        example: "@microzeny"
+        type: string
+        description: アカウントの名前
+        example: '@microzeny'
       profile:
-        type: "string"
-        description: "プロフィール文"
-        example: "microzenyは仮想通貨BitZenyのための決済ポータルサービスです。たくさんのfaucetや誰でも簡単にfaucetを開設できる機能を提供しています。"
+        type: string
+        description: プロフィール文
+        example: microzenyは仮想通貨BitZenyのための決済ポータルサービスです。たくさんのfaucetや誰でも簡単にfaucetを開設できる機能を提供しています。
       profile_image_url:
-        type: "string"
-        description: "プロフィール画像のURL"
-        example: "https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg"
+        type: string
+        description: プロフィール画像のURL
+        example: 'https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg'
 #externalDocs:
 #  description: "microzeny Developers"
 #  url: "https://microzeny.com/developers"
