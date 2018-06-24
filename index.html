@@ -1,0 +1,310 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>microzeny API | API Reference</title>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+    <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src="javascripts/foundation.js"></script> -->
+    <script src="javascripts/spectacle.min.js"></script>
+  </head>
+  <body id="spectacle">
+    <div id="page" class="drawer-layout drawer-slide-right-large">
+      <div id="sidebar">
+        <button class="close-button" aria-label="Close menu" type="button" data-drawer-close>
+          <span aria-hidden="true">×</span>
+        </button>
+        <nav id="nav" role="navigation">
+          <h5>Topics</h5>
+          <a href="#introduction">Introduction</a>
+          <a href="#authentication">Authentication</a>
+          <h5>Operations</h5>
+          <section>
+            <a href="#tag-Account">Account</a>
+            <ul>
+              <li>
+                <a href="#operation--accounts-get"> microzenyアカウントの情報を取得します </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <a href="#tag-ChargePayment">ChargePayment</a>
+            <ul> </ul>
+          </section>
+          <section>
+            <a href="#tag-DirectPayment">DirectPayment</a>
+            <ul> </ul>
+          </section>
+          <h5>Schema Definitions</h5>
+          <a href="#definition-Account"> Account </a>
+        </nav>
+      </div>
+      <div id="docs" class="row collapse expanded drawer" data-drawer>
+        <button class="floating-menu-icon" type="button" data-drawer-slide="right">
+          <span class="hamburger"></span>
+        </button>
+        <div class="example-box doc-content"></div>
+        <article>
+          <h1 class="doc-title">microzeny API
+            <span>API Reference</span>
+          </h1>
+          <div id="introduction" data-traverse-target="introduction">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <p>microzeny APIを利用すると、microzenyアカウントを使ってBitZenyの支払いや受け取りを行うことができます。microzenyは仮想通貨の実体ではなく権利のみを移動するオフチェーンサービスのため、支払い・受け取りはAPIリクエスト後すぐに完了します。</p>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>API Endpoint</h5>
+                  <!-- <div class="hljs"> --><pre><code>https://api.microzeny.com/v1</code></pre>
+                  <!-- </div> -->
+                  <h5>Request Content-Types:
+                    <span>application/x-www-form-urlencoded</span>
+                  </h5>
+                  <h5>Response Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Schemes:
+                    <span>https</span>
+                  </h5>
+                  <h5>Version:
+                    <span>0.0.1</span>
+                  </h5>
+                </section>
+              </div>
+            </div>
+          </div>
+          <!-- <h1 id="security" data-traverse-target="security">Security</h1> -->
+          <h1 id="authentication" data-traverse-target="authentication">Authentication</h1>
+          <div id="security-definition-microzeny_oauth" class="panel">
+            <div class="doc-row">
+              <div class="doc-copy">
+                <h3 class="security-definition-title">
+                  <span class="security-name">microzeny_oauth</span>
+                  <span class="swagger-security-definition-oauth2"></span>
+                </h3>
+                <section class="swagger-security-definition-properties">
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">type</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> oauth2 </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">flow</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> accessCode </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">authorizationUrl</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> https://microzeny.com/oauth/authorize </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">tokenUrl</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type"> https://api.microzeny.com/oauth/token </div>
+                  </div>
+                  <div class="prop-row security-definition-property">
+                    <div class="prop-name">
+                      <div class="prop-title security-definition-property-name">scopes</div>
+                    </div>
+                    <div class="prop-value security-definition-property-type">
+                      <span id="security-definition-scope-accounts">accounts</span>
+                      <p class="security-definition-scope-description">認可したmicrozenyアカウントの情報を取得します</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-Account" class="swagger-summary-tag" data-traverse-target="tag-Account">Account</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>microzenyアカウントの情報</p>
+            </div>
+          </div>
+          <div id="operation--accounts-get" class="operation panel" data-traverse-target="operation--accounts-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Account">Account</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">microzeny&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x306E;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;&#x3057;&#x307E;&#x3059;</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/accounts</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">default </div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Account">Account</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Success.</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Response Example
+                    <span>(default )</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;acc_xxxxxxxxxx&quot;</span>,
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;@microzeny&quot;</span>,
+  <span class="hljs-attr">&quot;profile&quot;</span>: <span class="hljs-string">&quot;microzeny&#x306F;&#x4EEE;&#x60F3;&#x901A;&#x8CA8;BitZeny&#x306E;&#x305F;&#x3081;&#x306E;&#x6C7A;&#x6E08;&#x30DD;&#x30FC;&#x30BF;&#x30EB;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067;&#x3059;&#x3002;&#x305F;&#x304F;&#x3055;&#x3093;&#x306E;faucet&#x3084;&#x8AB0;&#x3067;&#x3082;&#x7C21;&#x5358;&#x306B;faucet&#x3092;&#x958B;&#x8A2D;&#x3067;&#x304D;&#x308B;&#x6A5F;&#x80FD;&#x3092;&#x63D0;&#x4F9B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;&quot;</span>,
+  <span class="hljs-attr">&quot;profile_image_url&quot;</span>: <span class="hljs-string">&quot;https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-security">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="swagger-request-security-schema"></th>
+                        <th class="swagger-request-security-scopes"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a href="#security-definition-microzeny_oauth">microzeny_oauth</a>
+                        </td>
+                        <td>
+                          <a href="#security-definition-scope-accounts">accounts</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
+            </div>
+          </div>
+          <h1 id="tag-ChargePayment" class="swagger-summary-tag" data-traverse-target="tag-ChargePayment">ChargePayment</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>最初にサービスに対してチャージを行ってから支払う方法</p>
+            </div>
+          </div>
+          <h1 id="tag-DirectPayment" class="swagger-summary-tag" data-traverse-target="tag-DirectPayment">DirectPayment</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>microzenyのデフォルトのウォレットから直接支払う方法</p>
+            </div>
+          </div>
+          <h1>Schema Definitions</h1>
+          <div id="definition-Account" class="definition panel" data-traverse-target="definition-Account">
+            <h2 class="panel-title">
+              <a name="/definitions/Account"></a>Account: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="id" class="has-description">
+                      <span class="json-property-name">id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>アカウントのID</p>
+                    </dd>
+                    <dt data-property-name="name" class="has-description">
+                      <span class="json-property-name">name:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>アカウントの名前</p>
+                    </dd>
+                    <dt data-property-name="profile" class="has-description">
+                      <span class="json-property-name">profile:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>プロフィール文</p>
+                    </dd>
+                    <dt data-property-name="profile_image_url" class="has-description">
+                      <span class="json-property-name">profile_image_url:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>プロフィール画像のURL</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;acc_xxxxxxxxxx&quot;</span>,
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;@microzeny&quot;</span>,
+  <span class="hljs-attr">&quot;profile&quot;</span>: <span class="hljs-string">&quot;microzeny&#x306F;&#x4EEE;&#x60F3;&#x901A;&#x8CA8;BitZeny&#x306E;&#x305F;&#x3081;&#x306E;&#x6C7A;&#x6E08;&#x30DD;&#x30FC;&#x30BF;&#x30EB;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067;&#x3059;&#x3002;&#x305F;&#x304F;&#x3055;&#x3093;&#x306E;faucet&#x3084;&#x8AB0;&#x3067;&#x3082;&#x7C21;&#x5358;&#x306B;faucet&#x3092;&#x958B;&#x8A2D;&#x3067;&#x304D;&#x308B;&#x6A5F;&#x80FD;&#x3092;&#x63D0;&#x4F9B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;&quot;</span>,
+  <span class="hljs-attr">&quot;profile_image_url&quot;</span>: <span class="hljs-string">&quot;https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://sourcey.com/spectacle">Documentation by
+                <span>Spectacle</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </body>
+</html>

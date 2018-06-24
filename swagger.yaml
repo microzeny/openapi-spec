@@ -1,0 +1,77 @@
+swagger: "2.0"
+info:
+  description: |
+   microzeny APIを利用すると、microzenyアカウントを使ってBitZenyの支払いや受け取りを行うことができます。microzenyは仮想通貨の実体ではなく権利のみを移動するオフチェーンサービスのため、支払い・受け取りはAPIリクエスト後すぐに完了します。
+  version: "0.0.1"
+  title: "microzeny API"
+#  termsOfService: "https://microzeny.com/terms"
+#  contact:
+#    url: "https://microzeny.com/developers"
+#  license:
+#    name: "Apache 2.0"
+#    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "api.microzeny.com"
+basePath: "/v1"
+tags:
+- name: Account
+  description: "microzenyアカウントの情報"
+- name: ChargePayment
+  description: "最初にサービスに対してチャージを行ってから支払う方法"
+#  externalDocs:
+#   description: "チャージと支払いについて"
+#   url: "https://microzeny.com/developers/about-charge-payment"
+- name: DirectPayment
+  description: "microzenyのデフォルトのウォレットから直接支払う方法"
+schemes:
+- "https"
+consumes:
+ - "application/x-www-form-urlencoded" 
+produces:
+ - "application/json"
+paths:
+  /accounts:
+    get:
+      tags:
+      - Account
+      summary: "microzenyアカウントの情報を取得します"
+      description: "microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。"
+      operationId: "getAccount"
+      responses:
+        default:
+          description: "Success."
+          schema:
+           $ref: "#/definitions/Account"
+      security:
+      - microzeny_oauth:
+        - "accounts"
+securityDefinitions:
+  microzeny_oauth:
+    type: "oauth2"
+    flow: "accessCode"
+    authorizationUrl: "https://microzeny.com/oauth/authorize"
+    tokenUrl: "https://api.microzeny.com/oauth/token"
+    scopes:
+      accounts: "認可したmicrozenyアカウントの情報を取得します"
+definitions:
+  Account:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "アカウントのID"
+        example: "acc_xxxxxxxxxx"
+      name:
+        type: "string"
+        description: "アカウントの名前"
+        example: "@microzeny"
+      profile:
+        type: "string"
+        description: "プロフィール文"
+        example: "microzenyは仮想通貨BitZenyのための決済ポータルサービスです。たくさんのfaucetや誰でも簡単にfaucetを開設できる機能を提供しています。"
+      profile_image_url:
+        type: "string"
+        description: "プロフィール画像のURL"
+        example: "https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg"
+#externalDocs:
+#  description: "microzeny Developers"
+#  url: "https://microzeny.com/developers"

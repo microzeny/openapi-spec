@@ -1,0 +1,12 @@
+{
+  "name": "microzeny-api-spec",
+  "version": "0.0.1",
+  "description": "An OpenAPI specification for microzeny API.",
+  "dependencies": {
+    "spectacle-docs": "^1.0.3"
+  },
+  "scripts": {
+    "build": "./node_modules/spectacle-docs/bin/spectacle.js --target-dir . swagger.yaml"
+  },
+  "author": "satetsu888"
+}
