@@ -38,7 +38,7 @@ paths:
     get:
       tags:
         - Account
-      summary: microzenyアカウントの情報を取得
+      summary: アカウント情報取得
       description: microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。
       operationId: getAccount
       responses:
@@ -53,7 +53,7 @@ paths:
     post:
       tags:
         - ChargePayment
-      summary: サービス用のウォレットに対してチャージを行うURLを作成
+      summary: チャージURL作成
       description: サービス用のウォレットに対してチャージを行うためのワンタイムのURLを取得します。
       operationId: createCharge
       responses:
@@ -68,7 +68,7 @@ paths:
     get:
       tags:
         - ChargePayment
-      summary: IDを指定してチャージの情報を取得
+      summary: チャージ情報取得
       description: IDを指定してチャージの情報を取得します。ユーザがチャージURLからコールバックして来た時にチャージの結果を取得するなどに利用します。
       operationId: getCharge
       parameters:
