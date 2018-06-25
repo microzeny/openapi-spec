@@ -6,7 +6,7 @@ info:
     支払いは、最初にmicrozenyのウォレットからサービスに対してチャージを行いそのチャージ残高を使ってAPIから自由に支払いが行える **ChargePayment**、microzenyのウォレットから毎回確認を取りながら直接支払いを行う **DirectPayment** の2種類の方式があります。
     ChargePaymentは、faucetのような特定のアカウントのチャージを複数ユーザに支払う仕組みや、ゲームプレイ料やAPI利用料のように何度も支払いを行うようなユースケースを想定しており、DirectPaymentはECサイトのようにまとまった金額をユーザが明示的に支払うようなサービスを想定しています。
 
-    microzenyAPIのOpenAPI定義ファイルは [OpenAPI Spec File](https://microzeny.github.io/openapi-spec/swagger.yaml) にて公開しています。
+    microzeny APIの OpenAPI 定義ファイルは [OpenAPI Spec File](https://microzeny.github.io/openapi-spec/swagger.yaml) にて公開しています。
   version: 0.0.1
   title: microzeny API
 #  termsOfService: "https://microzeny.com/terms"
@@ -38,17 +38,49 @@ paths:
     get:
       tags:
         - Account
-      summary: microzenyアカウントの情報を取得します
+      summary: microzenyアカウントの情報を取得
       description: microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。
       operationId: getAccount
       responses:
-        default:
+        200:
           description: Success.
           schema:
             $ref: '#/definitions/Account'
       security:
         - microzeny_oauth:
-            - accounts
+          - accounts
+  /charges:
+    post:
+      tags:
+        - ChargePayment
+      summary: サービス用のウォレットに対してチャージを行うURLを作成
+      description: サービス用のウォレットに対してチャージを行うためのワンタイムのURLを取得します。
+      operationId: createCharge
+      responses:
+        200:
+          description: Success.
+          schema:
+            $ref: '#/definitions/Charge'
+      security:
+        - microzeny_oauth:
+          - charge_payment
+  /charges/{charge_id}:
+    get:
+      tags:
+        - ChargePayment
+      summary: IDを指定してチャージの情報を取得
+      description: IDを指定してチャージの情報を取得します。ユーザがチャージURLからコールバックして来た時にチャージの結果を取得するなどに利用します。
+      operationId: getCharge
+      parameters:
+        - $ref: '#/parameters/ChargeId'
+      responses:
+        200:
+          description: Success.
+          schema:
+            $ref: '#/definitions/Charge'
+      security:
+        - microzeny_oauth:
+          - charge_payment
 securityDefinitions:
   microzeny_oauth:
     type: oauth2
@@ -57,6 +89,13 @@ securityDefinitions:
     tokenUrl: 'https://api.microzeny.com/oauth/token'
     scopes:
       accounts: 認可したmicrozenyアカウントの情報を取得します
+      charge_payment: サービスにチャージを行ってから支払うChargePayment方式の支払いを行います
+parameters:
+  ChargeId:
+    name: charge_id
+    type: string
+    in: path
+    required: true
 definitions:
   Account:
     type: object
@@ -77,6 +116,33 @@ definitions:
         type: string
         description: プロフィール画像のURL
         example: 'https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg'
-#externalDocs:
-#  description: "microzeny Developers"
-#  url: "https://microzeny.com/developers"
+  Charge:
+    type: object
+    properties:
+      id:
+        type: string
+        description: チャージのID
+        example: cha_xxxxxxxx
+      url:
+        type: string
+        format: url
+        description: チャージを行うためのURL
+        example: https://microzeny.com/charges/cha_xxxxxxxx
+      expired_at:
+        type: string
+        format: datetime
+        description: チャージ可能な期限
+        example: '2018-07-01 00:00:00'
+      status:
+        type: string
+        enum:
+          - 'waiting'
+          - 'charged'
+          - 'canceled'
+          - 'expired'
+        description: チャージの状態
+        example: 'waiting'
+      amount:
+        type: string
+        description: チャージ金額。単位はZNYで小数点以下は最長で8桁。
+        example: '1.00000000'
