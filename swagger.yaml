@@ -38,7 +38,7 @@ paths:
     get:
       tags:
         - Account
-      summary: アカウント情報取得
+      summary: microzenyアカウントの情報を取得
       description: microzenyアカウントの識別ID、名前、プロフィール、プロフィール画像URLを取得します。
       operationId: getAccount
       responses:
@@ -49,11 +49,26 @@ paths:
       security:
         - microzeny_oauth:
           - accounts
+  /balance:
+    get:
+      tags:
+        - ChargePayment
+      summary: 現在の残高を取得
+      description: サービス用ウォレットの残高を取得します。
+      operationId: getBalance
+      responses:
+        200:
+          description: Success.
+          schema:
+            $ref: '#/definitions/Balance'
+      security:
+        - microzeny_oauth:
+          - charge_payment
   /charges:
     post:
       tags:
         - ChargePayment
-      summary: チャージURL作成
+      summary: サービス用のウォレットに対してチャージを行うURLを作成
       description: サービス用のウォレットに対してチャージを行うためのワンタイムのURLを取得します。
       operationId: createCharge
       responses:
@@ -68,7 +83,7 @@ paths:
     get:
       tags:
         - ChargePayment
-      summary: チャージ情報取得
+      summary: IDを指定してチャージの情報を取得
       description: IDを指定してチャージの情報を取得します。ユーザがチャージURLからコールバックして来た時にチャージの結果を取得するなどに利用します。
       operationId: getCharge
       parameters:
@@ -116,6 +131,17 @@ definitions:
         type: string
         description: プロフィール画像のURL
         example: 'https://pbs.twimg.com/profile_images/968861259843031041/BuA1G1WV.jpg'
+  Balance:
+    type: object
+    properties:
+      balance:
+        type: string
+        description: 残高の1/100μZNY表記。必ず整数。
+        example: '100000000'
+      balance_bitzeny:
+        type: string
+        description: 残高のZNY表記。小数点以下は最長で8桁。計算を行う際はDecimalとして取り扱う必要があります。
+        example: '1.00000000'
   Charge:
     type: object
     properties:
@@ -144,5 +170,5 @@ definitions:
         example: 'waiting'
       amount:
         type: string
-        description: チャージ金額。単位はZNYで小数点以下は最長で8桁。
+        description: チャージ金額。単位はZNYで小数点以下は最長で8桁。計算を行う際はDecimalとして取り扱う必要があります。
         example: '1.00000000'
